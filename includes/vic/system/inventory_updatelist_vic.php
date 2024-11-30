@@ -47,11 +47,11 @@ if(isset($_POST['delbtn']))
 
 
   if($has_error==0){
-    mysql_query("DELETE from ver_chronoforms_data_inventory_material_vic WHERE inventoryid = '$id'")
+    mysql_query("UPDATE ver_chronoforms_data_inventory_material_vic SET status = 'deleted' WHERE inventoryid = '$id'")
           or die(mysql_error()); 
     echo "Deleted";
     
-    mysql_query("DELETE from ver_chronoforms_data_inventory_vic WHERE inventoryid = '$id'")
+    mysql_query("UPDATE ver_chronoforms_data_inventory_vic SET status = 'deleted' WHERE inventoryid = '$id'")
           or die(mysql_error()); 
     echo "Deleted";
     header('Location:'.JURI::base().'system-management-vic/inventory-listing-vic'); 
@@ -197,7 +197,7 @@ if(isset($_POST['save']) || isset($_POST['save_new']))
     $rawdesc = implode(", ", $_POST['rawdesc']);
     $cnt = count($_POST['raw_material_id']);
      
-    $queryn = "DELETE FROM ver_chronoforms_data_inventory_material_vic WHERE inventoryid='{$id}' ";
+    $queryn = "UPDATE ver_chronoforms_data_inventory_material_vic SET status = 'deleted' WHERE inventoryid='{$id}' ";
     //error_log($queryn, 3,'C:\\xampp\htdocs\\vergola_contract_system_v4_us\\my-error.log');
     mysql_query($queryn);
 
@@ -643,7 +643,7 @@ function showdrop()
   <div id="matcontainer">
     
    <?php
-    $qitem = mysql_query("SELECT * FROM ver_chronoforms_data_inventory_vic WHERE inventoryid = '$InventoryID' ");
+    $qitem = mysql_query("SELECT * FROM ver_chronoforms_data_inventory_vic WHERE inventoryid = '$InventoryID' AND status != 'deleted' ");
     $inv_item=mysql_fetch_assoc($qitem);
     //error_log(print_r($inv_item,true), 3,'C:\\xampp\htdocs\\vergola_contract_system_v4_us\\my-error.log');
     if($inv_item["section"]=="Guttering" || $inv_item["section"]=="Flashings"){
@@ -672,7 +672,7 @@ function showdrop()
       </tr>
           <?php
 
-$qry = "SELECT ms.id, ms.inventoryid,ms.materialid, ms.inv_qty , ms.inv_extcost,(ms.inv_qty * ms.inv_extcost) AS extended_cost, m.supplierid, m.raw_description, m.qty, m.raw_cost, s.company_name FROM ver_chronoforms_data_inventory_material_vic AS ms  LEFT JOIN ver_chronoforms_data_materials_vic AS m ON m.cf_id=materialid LEFT JOIN ver_chronoforms_data_supplier_vic AS s ON m.supplierid=s.supplierid WHERE ms.inventoryid = '$InventoryID'   ";          
+$qry = "SELECT ms.id, ms.inventoryid,ms.materialid, ms.inv_qty , ms.inv_extcost,(ms.inv_qty * ms.inv_extcost) AS extended_cost, m.supplierid, m.raw_description, m.qty, m.raw_cost, s.company_name FROM ver_chronoforms_data_inventory_material_vic AS ms  LEFT JOIN ver_chronoforms_data_materials_vic AS m ON m.cf_id=materialid LEFT JOIN ver_chronoforms_data_supplier_vic AS s ON m.supplierid=s.supplierid WHERE ms.inventoryid = '$InventoryID' AND ms.status != 'deleted'";          
 //error_log($qry, 3,'C:\\xampp\htdocs\\vergola_contract_system_v4_us\\my-error.log');
 $resultmat = mysql_query($qry);
 if (!$resultmat) {

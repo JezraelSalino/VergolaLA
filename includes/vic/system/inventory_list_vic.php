@@ -11,14 +11,14 @@ if(isset($_POST['section']))
 	$section = $_POST['section'];
 	$sql = "SELECT IF(section LIKE '%Fixings%',
             replace(category, 'Beam Fixings', 'Beam Fittings'), category) 
-        AS `category` FROM  ver_chronoforms_data_inventory_vic AS inv   WHERE  inv.section='{$section}' GROUP BY category ";	
+        AS `category` FROM  ver_chronoforms_data_inventory_vic AS inv   WHERE  inv.section='{$section}' AND status != 'deleted' GROUP BY category ";	
 	$sectionResult = mysql_query ($sql);
 	  
 }else{
 	//category items if frame is the default selected.
 	$section = "Frame";
 
-	$sql = "SELECT category FROM  ver_chronoforms_data_inventory_vic AS inv   WHERE  inv.section='{$section}' GROUP BY category ";
+	$sql = "SELECT category FROM  ver_chronoforms_data_inventory_vic AS inv   WHERE  inv.section='{$section}' AND status != 'deleted' GROUP BY category ";
 	$sectionResult = mysql_query ($sql);
 }
 
@@ -110,7 +110,7 @@ $sql = "SELECT IF(section LIKE '%Fixings%',
         AS `section`, 
 				IF(section LIKE '%Fixings%',
             replace(category, 'Beam Fixings', 'Beam Fittings'), category) 
-        AS `category`, description, uom, inventoryid FROM ver_chronoforms_data_inventory_vic WHERE 1=1 ";
+        AS `category`, description, uom, inventoryid FROM ver_chronoforms_data_inventory_vic WHERE 1=1 AND status != 'deleted'";
 $result = mysql_query($sql) or die(mysql_error());
 
 if ($search){
