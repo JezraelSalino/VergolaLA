@@ -1091,7 +1091,7 @@ if(isset($_POST['delete_pdf']))
 { 
   $cf_id = $_POST['pdf_cf_id'];
   //error_log('cf_id: '.$cf_id, 3,'C:\\xampp\htdocs\\vergola_contract_system_v4_sa\\my-error.log');
-  mysql_query("DELETE from ver_chronoforms_data_letters_vic WHERE cf_id = '$cf_id'")
+  mysql_query("UPDATE ver_chronoforms_data_letters_vic SET status = 'deleted' WHERE cf_id = '$cf_id'")
         or die(mysql_error()); 
   
   $result = array('success' => true, 'note' => '');
@@ -1132,7 +1132,7 @@ $RetPhoto=$RetDrawInfo['photo'];
            }
            else
            {
-               mysql_query("DELETE from ver_chronoforms_data_drawings_vic WHERE cf_id = '$drawid'") or die(mysql_error()); echo "Deleted";
+               mysql_query("UPDATE ver_chronoforms_data_drawings_vic SET status = 'deleted' WHERE cf_id = '$drawid'") or die(mysql_error()); echo "Deleted";
            }
 	
 	//header('Location:'.JURI::base().'client-listing-vic/client-folder-vic?pid='.$id);
@@ -1154,7 +1154,7 @@ $RetPhoto=$RetDrawInfo['photo'];
            }
            else
            {
-              mysql_query("DELETE from ver_chronoforms_data_pics_vic WHERE cf_id = '$picid'") or die(mysql_error()); echo "Deleted";
+              mysql_query("UPDATE ver_chronoforms_data_pics_vic SET status='deleted' WHERE cf_id = '$picid'") or die(mysql_error()); echo "Deleted";
            }
 	
 	//header('Location:'.JURI::base().'client-listing-vic/client-folder-vic?pid='.$id);
@@ -1176,7 +1176,7 @@ $RetPhoto=$RetDrawInfo['photo'];
            }
            else
            {
-               mysql_query("DELETE from ver_chronoforms_data_pics_vic WHERE cf_id = '$fileid'") or die(mysql_error()); echo "Deleted";
+               mysql_query("UPDATE ver_chronoforms_data_pics_vic SET status='deleted' WHERE cf_id = '$fileid'") or die(mysql_error()); echo "Deleted";
            }
   
   //header('Location:'.JURI::base().'client-listing-vic/client-folder-vic?pid='.$id);
@@ -1829,7 +1829,7 @@ echo "
         <br/>
         <ul id="tbl-imgpic" class="picture-block">
           <?php
-$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID' AND upload_type ='pic' ");
+$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID' AND upload_type ='pic' AND status != 'deleted'");
 if (!$resultimg) {
     echo 'Could not run query: ' . mysql_error();
     exit;
@@ -1985,7 +1985,7 @@ while($info = mysql_fetch_array( $data ))
         <br/>
         <ul id="tbl-img" class="picture-block">
           <?php
-$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_drawings_vic WHERE clientid = '$ClientID'");
+$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_drawings_vic WHERE clientid = '$ClientID' AND status != 'deleted'");
 if (!$resultimg) {
     echo 'Could not run query: ' . mysql_error();
     exit;
@@ -2141,7 +2141,7 @@ if (!$resultimg) {
           <br/><br/>
           <ul id="tbl-imgpic" class="picture-block" >
             <?php
-              $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='file' ");
+              $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='file' AND status != 'deleted'");
               if (!$resultimg) {
                   echo 'Could not run query: ' . mysql_error();
                   exit;

@@ -118,7 +118,7 @@ if(isset($_FILES['pic'])){
 if(isset($_POST['delete']))
 {	
 
-	mysql_query("DELETE from ver_chronoforms_data_builderpersonal_vic WHERE pid = '$id'")
+	mysql_query("UPDATE ver_chronoforms_data_builderpersonal_vic SET status = 'deleted' WHERE pid = '$id'")
 				or die(mysql_error()); 
 	echo "Deleted";
 	
@@ -131,7 +131,7 @@ if(isset($_POST['delete-drawing'])) {
 $RetDrawInfo = mysql_fetch_array($DrawInfo); if (!$DrawInfo) {die("Error: Data not found..");}
 $RetPhoto=$RetDrawInfo['photo'];
 	  
-	  mysql_query("DELETE from ver_chronoforms_data_drawings_vic WHERE cf_id = '$drawid'") or die(mysql_error()); echo "Deleted";
+	  mysql_query("UPDATE ver_chronoforms_data_drawings_vic SET status = 'deleted' WHERE cf_id = '$drawid'") or die(mysql_error()); echo "Deleted";
 	  
 	       $file = $RetPhoto;
            if (!unlink($file))
@@ -152,7 +152,7 @@ $DrawInfo = mysql_query("SELECT * FROM ver_chronoforms_data_pics_vic WHERE cf_id
 $RetDrawInfo = mysql_fetch_array($DrawInfo); if (!$DrawInfo) {die("Error: Data not found..");}
 $RetPhoto=$RetDrawInfo['photo'];
 	  
-	  mysql_query("DELETE from ver_chronoforms_data_pics_vic WHERE cf_id = '$picid'") or die(mysql_error()); echo "Deleted";
+	  mysql_query("UPDATE ver_chronoforms_data_pics_vic SET status = 'deleted' WHERE cf_id = '$picid'") or die(mysql_error()); echo "Deleted";
 	  
 	       $file = $RetPhoto;
            if (!unlink($file))

@@ -1044,7 +1044,7 @@ if(isset($_POST['delete-pic'])) {
     }
     else
     {
-        mysql_query("DELETE from ver_chronoforms_data_pics_vic WHERE cf_id = '$picid'") or die(mysql_error());  
+        mysql_query("UPDATE ver_chronoforms_data_pics_vic SET status = 'deleted' WHERE cf_id = '$picid'") or die(mysql_error());  
     }
      
 }
@@ -3015,7 +3015,7 @@ while($info = mysql_fetch_array( $data ))
     echo "</tr>";
  } 
 
-              $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_sales_doc' ");
+              $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_sales_doc' AND status != 'deleted'");
               if (!$resultimg) {
                   echo 'Could not run query: ' . mysql_error();
                   exit;
@@ -3300,7 +3300,7 @@ while($info = mysql_fetch_array( $data ))
                 echo '<div> 
                       <ul style="list-style-type: none; margin: 5px 0 5px 10px;padding: 0;"  >';
                
-                  $sql = "SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='signed_correspondence_doc' AND ref_id={$info['cf_id']} ";
+                  $sql = "SELECT cf_id, clientid, photo, file_name FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='signed_correspondence_doc' AND ref_id={$info['cf_id']}";
                   $resultimg = mysql_query($sql);
                             
                
@@ -3370,7 +3370,7 @@ while($info = mysql_fetch_array( $data ))
             echo "</tr>";
            }
 
-           $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_correspondence_doc' ");
+           $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_correspondence_doc' AND status != 'deleted'");
               if (!$resultimg) {
                   echo 'Could not run query: ' . mysql_error();
                   exit;
@@ -3574,7 +3574,7 @@ while($info = mysql_fetch_array( $data ))
                 echo "</tr>";
            } 
 
-           $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_stat_doc' ");
+           $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='upload_stat_doc' AND status != 'deleted'");
               if (!$resultimg) {
                   echo 'Could not run query: ' . mysql_error();
                   exit;
@@ -3677,7 +3677,7 @@ while($info = mysql_fetch_array( $data ))
               <th>&nbsp; </th>  
             </tr>
           <?php
-$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID' AND upload_type ='pic' ");
+$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID' AND upload_type ='pic' AND status != 'deleted'");
 if (!$resultimg) {
     echo 'Could not run query: ' . mysql_error();
     exit;
@@ -3740,7 +3740,7 @@ if (!$resultimg) {
             <th>&nbsp; </th>  
           </tr>
         <?php
-$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_drawings_vic WHERE clientid = '$ClientID'");
+$resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_drawings_vic WHERE clientid = '$ClientID' AND status != 'deleted'");
 if (!$resultimg) {
     echo 'Could not run query: ' . mysql_error();
     exit;
@@ -3795,7 +3795,7 @@ if (!$resultimg) {
               <th>&nbsp; </th>  
             </tr>
             <?php
-                $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='file' ");
+                $resultimg = mysql_query("SELECT cf_id, clientid, photo, file_name, datestamp FROM ver_chronoforms_data_pics_vic WHERE clientid = '$ClientID'  AND upload_type ='file' AND status != 'deleted'");
                 if (!$resultimg) {
                     echo 'Could not run query: ' . mysql_error();
                     exit;
